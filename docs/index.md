@@ -38,28 +38,6 @@ where
 +--------------+--------------------------+-------------+---------------+
 ```
 
-Query IP geolocation nested data:
-
-```sql
-select
-   country_code,
-   country ->> 'capital' as capital_city,
-   country['translation'] as translation 
-from
-   ip2locationio_geolocation 
-where
-   ip = '8.8.8.8' 
-   and lang = 'es';
-```
-
-```
-+--------------+------------------+---------------------------------------------------------+
-| country_code | capital_city     | translation                                             |
-+--------------+------------------+---------------------------------------------------------+
-| US           | Washington, D.C. | {"lang":"es","value":"Estados Unidos de América (los)"} |
-+--------------+------------------+---------------------------------------------------------+
-```
-
 Query WHOIS data:
 
 ```sql
@@ -82,28 +60,6 @@ where
 +------------+-------------------------+---------------------------------------------------------------------------+----------------------+
 ```
 
-Query WHOIS nested data:
-
-```sql
-select
-   domain,
-   domain_id,
-   registrar ->> 'name' as registrar_name,
-   nameservers 
-from
-   ip2locationio_whois 
-where
-   domain = 'google.com';
-```
-
-```
-+------------+-------------------------+-------------------+-----------------------------------------------------------------------+
-| domain     | domain_id               | registrar_name    | nameservers                                                           |
-+------------+-------------------------+-------------------+-----------------------------------------------------------------------+
-| google.com | 2138514_DOMAIN_COM-VRSN | MarkMonitor, Inc. | ["ns2.google.com","ns4.google.com","ns3.google.com","ns1.google.com"] |
-+------------+-------------------------+-------------------+-----------------------------------------------------------------------+
-```
-
 ## Documentation
 
 - **[Table definitions & examples →](/plugins/ip2location/ip2locationio/tables)**
@@ -114,9 +70,18 @@ where
 
 Download and install the latest ip2location.io plugin:
 
-```bash
+```sh
 steampipe plugin install ip2locationio
 ```
+
+### Credentials
+
+| Item        | Description                                                                                                                                                                                           |
+| ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Credentials | IP2Location.io requires an [API key](https://www.ip2location.io/pricing) for all requests.                                                                |
+| Permissions | API keys hava access to data fields based on their [subscription plans](https://www.ip2location.io/pricing).                                                         |
+| Radius      | Each connection represents a single IP2Location.io user.                                                                                                                                           |
+| Resolution  | 1. Credentials explicitly set in a steampipe config file (`~/.steampipe/config/ip2locationio.spc`)<br />2. Credentials specified in an environment variable, e.g., `IP2LOCATIONIO_API_KEY`. |
 
 ### Configuration
 
@@ -126,13 +91,20 @@ Installing the latest ip2locationio plugin will create a config file (`~/.steamp
 connection "ip2locationio" {
   plugin = "ip2location/ip2locationio"
 
-  # Required: Set your IP2Location.io API key.
+  # API key for requests. Required.
   # Sign up for a free key at https://www.ip2location.io/pricing
+  # This can also be set via the `IP2LOCATIONIO_API_KEY` environment variable.
   # api_key = "Q5Z8QS544RKC2VK4P3ZH7YW3C16MDCBW"
 }
 ```
 
 - `api_key` - Required API key from ip2location.io.
+
+Alternatively, you can also use the standard ip2location.io environment variable to obtain credentials **only if other argument (`api_key`) is not specified** in the connection:
+
+```sh
+export IP2LOCATIONIO_API_KEY=Q5Z8QS544RKC2VK4P3ZH7YW3C16MDCBW
+```
 
 ## Get involved
 

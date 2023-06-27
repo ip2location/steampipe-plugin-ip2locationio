@@ -2,8 +2,10 @@ package ip2locationio
 
 import (
 	"context"
+	"errors"
 	ip2location "github.com/ip2location/ip2location-io-go/ip2locationio"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
+	"os"
 )
 
 func connectGeolocation(_ context.Context, d *plugin.QueryData) (*ip2location.IPGeolocation, error) {
@@ -14,10 +16,18 @@ func connectGeolocation(_ context.Context, d *plugin.QueryData) (*ip2location.IP
 		return cachedData.(*ip2location.IPGeolocation), nil
 	}
 
+	// Default to the env var setting
+	apiKey := os.Getenv("IP2LOCATIONIO_API_KEY")
+
+	// Prefer config settings
 	ip2locationioConfig := GetConfig(d.Connection)
-	apiKey := ""
 	if ip2locationioConfig.ApiKey != nil {
 		apiKey = *ip2locationioConfig.ApiKey
+	}
+
+	// Error if the minimum config is not set
+	if apiKey == "" {
+		return nil, errors.New("API key must be configured")
 	}
 
 	config, err := ip2location.OpenConfiguration(apiKey)
@@ -45,10 +55,18 @@ func connectWhois(_ context.Context, d *plugin.QueryData) (*ip2location.DomainWh
 		return cachedData.(*ip2location.DomainWhois), nil
 	}
 
+	// Default to the env var setting
+	apiKey := os.Getenv("IP2LOCATIONIO_API_KEY")
+
+	// Prefer config settings
 	ip2locationioConfig := GetConfig(d.Connection)
-	apiKey := ""
 	if ip2locationioConfig.ApiKey != nil {
 		apiKey = *ip2locationioConfig.ApiKey
+	}
+
+	// Error if the minimum config is not set
+	if apiKey == "" {
+		return nil, errors.New("API key must be configured")
 	}
 
 	config, err := ip2location.OpenConfiguration(apiKey)

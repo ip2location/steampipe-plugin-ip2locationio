@@ -18,3 +18,17 @@ from
 where
    domain = 'google.com';
 ```
+
+### Nested info for a specific domain name
+
+```sql
+select
+   domain,
+   domain_id,
+   registrar ->> 'name' as registrar_name,
+   nameservers 
+from
+   ip2locationio_whois 
+where
+   domain = 'google.com';
+```
