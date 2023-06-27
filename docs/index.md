@@ -79,7 +79,7 @@ steampipe plugin install ip2locationio
 | Item        | Description                                                                                                                                                                                           |
 | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Credentials | IP2Location.io requires an [API key](https://www.ip2location.io/pricing) for all requests.                                                                |
-| Permissions | API keys hava access to data fields based on their [subscription plans](https://www.ip2location.io/pricing).                                                         |
+| Permissions | API keys have access to data fields based on their [subscription plans](https://www.ip2location.io/pricing).                                                         |
 | Radius      | Each connection represents a single IP2Location.io user.                                                                                                                                           |
 | Resolution  | 1. Credentials explicitly set in a steampipe config file (`~/.steampipe/config/ip2locationio.spc`)<br />2. Credentials specified in an environment variable, e.g., `IP2LOCATIONIO_API_KEY`. |
 
