@@ -13,7 +13,7 @@ Use SQL to retrieve geolocation or WHOIS info in minutes using [ip2location.io](
 
 Install the plugin with [Steampipe](https://steampipe.io):
 
-```shell
+```sh
 steampipe plugin install ip2location/ip2locationio
 ```
 
@@ -23,15 +23,22 @@ Configure the server address in `~/.steampipe/config/ip2locationio.spc`:
 connection "ip2locationio" {
   plugin = "ip2location/ip2locationio"
 
-  # Required: Set your IP2Location.io API key.
+  # API key for requests. Required.
   # Sign up for a free key at https://www.ip2location.io/pricing
+  # This can also be set via the `IP2LOCATIONIO_API_KEY` environment variable.
   # api_key = "Q5Z8QS544RKC2VK4P3ZH7YW3C16MDCBW"
 }
 ```
 
+Or through environment variables:
+
+```sh
+export IP2LOCATIONIO_API_KEY=Q5Z8QS544RKC2VK4P3ZH7YW3C16MDCBW
+```
+
 Run steampipe:
 
-```shell
+```sh
 steampipe query
 ```
 
@@ -57,28 +64,6 @@ where
 +--------------+--------------------------+-------------+---------------+
 ```
 
-Query IP geolocation nested data:
-
-```sql
-select
-   country_code,
-   country ->> 'capital' as capital_city,
-   country['translation'] as translation 
-from
-   ip2locationio_geolocation 
-where
-   ip = '8.8.8.8' 
-   and lang = 'es';
-```
-
-```
-+--------------+------------------+---------------------------------------------------------+
-| country_code | capital_city     | translation                                             |
-+--------------+------------------+---------------------------------------------------------+
-| US           | Washington, D.C. | {"lang":"es","value":"Estados Unidos de América (los)"} |
-+--------------+------------------+---------------------------------------------------------+
-```
-
 Query WHOIS data:
 
 ```sql
@@ -101,28 +86,6 @@ where
 +------------+-------------------------+---------------------------------------------------------------------------+----------------------+
 ```
 
-Query WHOIS nested data:
-
-```sql
-select
-   domain,
-   domain_id,
-   registrar ->> 'name' as registrar_name,
-   nameservers 
-from
-   ip2locationio_whois 
-where
-   domain = 'google.com';
-```
-
-```
-+------------+-------------------------+-------------------+-----------------------------------------------------------------------+
-| domain     | domain_id               | registrar_name    | nameservers                                                           |
-+------------+-------------------------+-------------------+-----------------------------------------------------------------------+
-| google.com | 2138514_DOMAIN_COM-VRSN | MarkMonitor, Inc. | ["ns2.google.com","ns4.google.com","ns3.google.com","ns1.google.com"] |
-+------------+-------------------------+-------------------+-----------------------------------------------------------------------+
-```
-
 ## Developing
 
 Prerequisites:
@@ -139,13 +102,13 @@ cd steampipe-plugin-ip2locationio
 
 Build, which automatically installs the new version to your `~/.steampipe/plugins` directory:
 
-```
+```sh
 make
 ```
 
 Configure the plugin:
 
-```
+```sh
 cp config/* ~/.steampipe/config
 nano ~/.steampipe/config/ip2locationio.spc
 ```
