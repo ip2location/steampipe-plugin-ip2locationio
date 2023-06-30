@@ -71,7 +71,7 @@ where
 Download and install the latest ip2location.io plugin:
 
 ```sh
-steampipe plugin install ip2locationio
+steampipe plugin install ip2location/ip2locationio
 ```
 
 ### Credentials
