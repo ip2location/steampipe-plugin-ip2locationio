@@ -20,14 +20,14 @@ Query IP geolocation:
 
 ```sql
 select
-   country_code,
-   country_name,
-   region_name,
-   city_name 
+  country_code,
+  country_name,
+  region_name,
+  city_name 
 from
-   ip2locationio_geolocation 
+  ip2locationio_geolocation 
 where
-   ip = '8.8.8.8';
+  ip = '8.8.8.8';
 ```
 
 ```
@@ -42,14 +42,14 @@ Query WHOIS data:
 
 ```sql
 select
-   domain,
-   domain_id,
-   status,
-   create_date 
+  domain,
+  domain_id,
+  status,
+  create_date 
 from
-   ip2locationio_whois 
+  ip2locationio_whois 
 where
-   domain = 'google.com';
+  domain = 'google.com';
 ```
 
 ```

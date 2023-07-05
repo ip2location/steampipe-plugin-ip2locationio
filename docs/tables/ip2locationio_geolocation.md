@@ -9,26 +9,26 @@ The `ip2locationio_geolocation` table requires the `ip` field to be specified in
 
 ```sql
 select
-   country_code,
-   country_name,
-   region_name,
-   city_name 
+  country_code,
+  country_name,
+  region_name,
+  city_name 
 from
-   ip2locationio_geolocation 
+  ip2locationio_geolocation 
 where
-   ip = '8.8.8.8';
+  ip = '8.8.8.8';
 ```
 
 ### Nested info for specific IP address
 
 ```sql
 select
-   country_code,
-   country ->> 'capital' as capital_city,
-   country['translation'] as translation 
+  country_code,
+  country ->> 'capital' as capital_city,
+  country['translation'] as translation 
 from
-   ip2locationio_geolocation 
+  ip2locationio_geolocation 
 where
-   ip = '8.8.8.8' 
-   and lang = 'es';
+  ip = '8.8.8.8' 
+  and lang = 'es';
 ```
