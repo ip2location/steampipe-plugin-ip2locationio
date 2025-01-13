@@ -1,3 +1,9 @@
+## v0.0.2 [2025-01-13]
+
+_What's new?_
+
+- New column fraud_score added to ip2locationio_geolocation table
+
 ## v0.0.1 [2023-07-07]
 
 _What's new?_

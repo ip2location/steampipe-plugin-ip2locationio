@@ -13,7 +13,8 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 			NewInstance: ConfigInstance,
 			Schema:      ConfigSchema,
 		},
-		DefaultTransform: transform.FromGo().NullIfZero(),
+		// DefaultTransform: transform.FromGo().NullIfZero(),
+		DefaultTransform: transform.FromGo(),
 		TableMap: map[string]*plugin.Table{
 			"ip2locationio_geolocation": tableIP2LocationIOGeolocation(ctx),
 			"ip2locationio_whois":       tableIP2LocationIOWhois(ctx),

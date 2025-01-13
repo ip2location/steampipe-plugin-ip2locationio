@@ -3,7 +3,7 @@ module github.com/ip2location/steampipe-plugin-ip2locationio
 go 1.19
 
 require (
-	github.com/ip2location/ip2location-io-go/ip2locationio v0.0.0-20230620051435-c2d12bf88058
+	github.com/ip2location/ip2location-io-go v1.1.2
 	github.com/turbot/steampipe-plugin-sdk/v5 v5.5.0
 )
 

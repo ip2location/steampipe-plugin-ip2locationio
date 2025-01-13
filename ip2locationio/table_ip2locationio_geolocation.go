@@ -52,6 +52,7 @@ func tableIP2LocationIOGeolocation(ctx context.Context) *plugin.Table {
 			{Name: "district", Type: proto.ColumnType_STRING, Description: "District name."},
 			{Name: "ads_category", Type: proto.ColumnType_STRING, Description: "Domain category code based on IAB Tech Lab Content Taxonomy."},
 			{Name: "ads_category_name", Type: proto.ColumnType_STRING, Description: "Domain category based on IAB Tech Lab Content Taxonomy."},
+			{Name: "fraud_score", Type: proto.ColumnType_INT, Description: "Potential risk score (0 - 99) associated with IP address."},
 
 			// Nested columns
 			{Name: "continent", Type: proto.ColumnType_JSON, Description: "Continent details."},
