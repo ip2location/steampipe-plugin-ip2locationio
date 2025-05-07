@@ -1,3 +1,10 @@
+## v0.0.3 [2025-05-07]
+
+_What's new?_
+
+- New table added
+  - [ip2locationio_hosted](https://hub.steampipe.io/plugins/ip2location/ip2locationio/tables/ip2locationio_hosted)
+
 ## v0.0.2 [2025-01-13]
 
 _What's new?_

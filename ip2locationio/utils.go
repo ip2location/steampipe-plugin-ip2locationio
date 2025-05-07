@@ -85,3 +85,42 @@ func connectWhois(_ context.Context, d *plugin.QueryData) (*ip2location.DomainWh
 
 	return whois, nil
 }
+
+func connectHosted(_ context.Context, d *plugin.QueryData) (*ip2location.HostedDomain, error) {
+
+	// Load connection from cache
+	cacheKey := "ip2locationiohosted"
+	if cachedData, ok := d.ConnectionManager.Cache.Get(cacheKey); ok {
+		return cachedData.(*ip2location.HostedDomain), nil
+	}
+
+	// Default to the env var setting
+	apiKey := os.Getenv("IP2LOCATIONIO_API_KEY")
+
+	// Prefer config settings
+	ip2locationioConfig := GetConfig(d.Connection)
+	if ip2locationioConfig.ApiKey != nil {
+		apiKey = *ip2locationioConfig.ApiKey
+	}
+
+	// Error if the minimum config is not set
+	if apiKey == "" {
+		return nil, errors.New("API key must be configured")
+	}
+
+	config, err := ip2location.OpenConfiguration(apiKey)
+
+	if err != nil {
+		return nil, err
+	}
+	hosted, err := ip2location.OpenHostedDomain(config)
+
+	if err != nil {
+		return nil, err
+	}
+
+	// Save to cache
+	d.ConnectionManager.Cache.Set(cacheKey, hosted)
+
+	return hosted, nil
+}

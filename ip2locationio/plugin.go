@@ -18,6 +18,7 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 		TableMap: map[string]*plugin.Table{
 			"ip2locationio_geolocation": tableIP2LocationIOGeolocation(ctx),
 			"ip2locationio_whois":       tableIP2LocationIOWhois(ctx),
+			"ip2locationio_hosted":       tableIP2LocationIOHosted(ctx),
 		},
 	}
 	return p
